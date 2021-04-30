@@ -75,8 +75,11 @@ jobs:
                 name: Back-end build
                 working_directory: ./backend
                 command: |
+                    echo "Starting npm i"
                     npm i
+                    echo "npm audit fix --audit-level=critical --force"
                     npm audit fix --audit-level=critical --force
+                    echo "npm run build"
                     npm run build
 
             - persist_to_workspace:
