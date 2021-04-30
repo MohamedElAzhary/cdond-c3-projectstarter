@@ -449,7 +449,7 @@ jobs:
                     echo "${CurrentWorkflowID} is the actual workflow"
                     echo "${STACKS}"
 
-                    if [[ "$CurrentWorkflowID" != "$OldWorkflowID" ]]
+                    if [[ "$CurrentWorkflowID" != "$OldWorkflowID" ]] && [[ "" != "$OldWorkflowID" ]]
                     then
                         aws s3api list-buckets --query "Buckets[].Name" >> bucketsfound.txt
                         cat bucketsfound.txt
@@ -476,7 +476,7 @@ jobs:
 
 
 
-#if [[ "$CurrentWorkflowID" != "$OldWorkflowID" ]] && [[ "" != "$OldWorkflowID" ]]
+
                 
 
 
