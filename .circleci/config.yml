@@ -173,6 +173,7 @@ jobs:
                     yum -y install tar gzip
             - run:
                 name: Ensure back-end infrastructure exists
+                no_output_timeout: 15m
                 command: |
                     aws cloudformation deploy \
                         --template-file .circleci/files/backend.yml \
@@ -190,6 +191,7 @@ jobs:
                     echo "backend_URL is https://${backend_address}:3030"
             - run:
                 name: Ensure front-end infrastructure exist
+                no_output_timeout: 15m
                 command: |
                     aws cloudformation deploy \
                         --template-file .circleci/files/frontend.yml \
@@ -407,6 +409,7 @@ jobs:
                     echo "${CIRCLE_WORKFLOW_ID:0:7} is the actual workflow"
             - run:
                 name: Update cloudfront distribution
+                no_output_timeout: 15m
                 command: |
                     aws cloudformation deploy \
                         --template-file .circleci/files/cloudfront.yml \
@@ -427,6 +430,7 @@ jobs:
             - checkout
             - run:
                 name: Remove old stacks and files
+                no_output_timeout: 15m
                 command: |
                     export OldWorkflowID=$(curl -H \
                         "token: a0666f02-051d-47d6-ab69-b742850ece78" --request GET \
