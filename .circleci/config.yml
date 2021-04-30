@@ -187,7 +187,7 @@ jobs:
                         --request PUT \
                         --data "${backend_address}" \
                         https://api.memstash.io/values/backendip
-                    echo "backend_URL is https://${backend_address}:3030"
+                    echo "backend_URL is https://${backend_address}:3000"
             - run:
                 name: Ensure front-end infrastructure exist
                 command: |
@@ -295,7 +295,7 @@ jobs:
                 command: |
                     backend_address=$(curl -H "token: 061c9aa6-047d-4e18-a9c2-04db4d3442f0" \
                         --request GET https://api.memstash.io/values/backendip)
-                    export API_URL="http://${backend_address}:3030"
+                    export API_URL="http://${backend_address}:3000"
                     echo "backend_address= ${API_URL}"
                     echo "API_URL=${API_URL}" >> .env
             - run:
@@ -368,7 +368,7 @@ jobs:
                 command: |
                     export BACKEND_URL=$(curl -H "token: 061c9aa6-047d-4e18-a9c2-04db4d3442f0" \
                         --request GET https://api.memstash.io/values/backendip)
-                    curl "http://$BACKEND_URL:3030/api/status"
+                    curl "http://$BACKEND_URL:3000/api/status"
 
 
             - run:
