@@ -76,7 +76,9 @@ jobs:
                 working_directory: ./backend
                 command: |
                     npm i
+                    npm audit fix --audit-level=critical --force
                     npm run build
+
             - persist_to_workspace:
                 root: .
                 paths:
