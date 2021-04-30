@@ -76,6 +76,7 @@ jobs:
                 working_directory: ./backend
                 command: |
                     npm i
+                    npm update
                     npm run build
             - persist_to_workspace:
                 root: .
@@ -99,7 +100,9 @@ jobs:
                     name: front-end test
                     working_directory: ./frontend            
                     command: |
-                        npm audit fix && npm run test
+                        npm update
+                        npm audit fix
+                        npm run test
             -   slack/notify:
                     channel: C0203FKFT27
                     event: fail
@@ -117,7 +120,9 @@ jobs:
                     name: back-end test
                     working_directory: ./backend            
                     command: |
-                        npm audit fix && npm run test
+                        npm update
+                        npm audit fix
+                        npm run test
             -   slack/notify:
                     channel: C0203FKFT27
                     event: fail
@@ -135,6 +140,7 @@ jobs:
                     name: front-end analyze
                     working_directory: ./frontend            
                     command: |
+                        npm update
                         npm audit fix --audit-level=critical --force
             -   slack/notify:
                     channel: C0203FKFT27
