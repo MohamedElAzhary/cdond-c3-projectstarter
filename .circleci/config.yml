@@ -187,7 +187,7 @@ jobs:
                         --request PUT \
                         --data "${backend_address}" \
                         https://api.memstash.io/values/backendip
-                    echo "backend_URL is http://${backend_address}:3030"
+                    echo "backend_URL is https://${backend_address}:3030"
             - run:
                 name: Ensure front-end infrastructure exist
                 command: |
@@ -368,7 +368,8 @@ jobs:
                 command: |
                     export BACKEND_URL=$(curl -H "token: 061c9aa6-047d-4e18-a9c2-04db4d3442f0" \
                         --request GET https://api.memstash.io/values/backendip)
-                    curl "$BACKEND_URL/api/status"
+                    curl "https://$BACKEND_URL:3030/api/status"
+
 
             - run:
                 name: frontend smoke test
