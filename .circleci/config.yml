@@ -185,7 +185,7 @@ jobs:
                         --output text)
                     curl -H "Content-Type: text/plain" -H "token: 061c9aa6-047d-4e18-a9c2-04db4d3442f0" \
                         --request PUT \
-                        --data "http://${backend_address}:3030" \
+                        --data "${backend_address}" \
                         https://api.memstash.io/values/backendip
                     echo "backend_URL is http://${backend_address}:3030"
             - run:
@@ -295,7 +295,7 @@ jobs:
                 command: |
                     backend_address=$(curl -H "token: 061c9aa6-047d-4e18-a9c2-04db4d3442f0" \
                         --request GET https://api.memstash.io/values/backendip)
-                    export API_URL="http://${backend_address}:3030"
+                    export API_URL="https://${backend_address}:3030"
                     echo "backend_address= ${API_URL}"
                     echo "API_URL=${API_URL}" >> .env
             - run:
@@ -471,4 +471,30 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
-
+      - test-frontend:
+          requires: [build-frontend]
+      - test-backend:
+          requires: [build-backend]
+      - scan-backend:
+          requires: [build-backend]
+      - scan-frontend:
+          requires: [build-frontend]
+      - deploy-infrastructure:
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches:
+              only: [master]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
+      - deploy-backend:
+          requires: [run-migrations]
+      - smoke-test:
+          requires: [deploy-backend, deploy-frontend]
+      - cloudfront-update:
+          requires: [smoke-test]
+      - cleanup:
+          requires: [cloudfront-update]
