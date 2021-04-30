@@ -75,11 +75,7 @@ jobs:
                 name: Back-end build
                 working_directory: ./backend
                 command: |
-                    echo "Starting npm i"
                     npm i
-                    echo "Starting npm audit fix --audit-level=critical --force"
-                    npm audit fix --audit-level=critical --force
-                    echo "Starting npm run build"
                     npm run build
 
             - persist_to_workspace:
@@ -104,7 +100,6 @@ jobs:
                     name: front-end test
                     working_directory: ./frontend            
                     command: |
-                        npm update
                         npm audit fix
                         npm run test
             -   slack/notify:
@@ -124,7 +119,6 @@ jobs:
                     name: back-end test
                     working_directory: ./backend            
                     command: |
-                        npm update
                         npm audit fix
                         npm run test
             -   slack/notify:
@@ -144,7 +138,6 @@ jobs:
                     name: front-end analyze
                     working_directory: ./frontend            
                     command: |
-                        npm update
                         npm audit fix --audit-level=critical --force
             -   slack/notify:
                     channel: C0203FKFT27
