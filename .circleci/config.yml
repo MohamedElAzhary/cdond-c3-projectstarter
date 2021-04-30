@@ -14,10 +14,13 @@ commands:
             name: Destroy environments
             when: on_fail                
             command: |
-                aws cloudformation delete-stack --stack-name backend-${CIRCLE_WORKFLOW_ID:0:7}
-                aws cloudformation delete-stack --stack-name frontend-${CIRCLE_WORKFLOW_ID:0:7}
-                aws s3 rb s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --force
                 echo "Deleting Environment"
+                aws s3 rb s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --force
+                echo "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} deleted"
+                aws cloudformation delete-stack --stack-name backend-${CIRCLE_WORKFLOW_ID:0:7}
+                echo "backend stack deleted"
+                aws cloudformation delete-stack --stack-name frontend-${CIRCLE_WORKFLOW_ID:0:7}
+                echo "frontend stack deleted"
 
   revert-migrations:
     description: Revert migrations.
@@ -271,7 +274,7 @@ jobs:
                         echo "Mirgration is successful"
                     else
                         export Grepres=0
-                        echo "Mirgration failed"
+                        echo "No new migrations were applied"
                     fi
                     curl -H "Content-Type: text/plain" -H "token: 0c07a2df-c418-4c06-aeb8-f4863f8cda32" \
                         --request PUT \
@@ -308,6 +311,7 @@ jobs:
                     npm audit fix
                     npm run build
                     aws s3 cp ./dist "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --recursive
+                    echo "Frontend objects were deployed successfully to s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}"
 
             - revert-migrations:
                 workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
