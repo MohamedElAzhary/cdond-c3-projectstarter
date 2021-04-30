@@ -34,7 +34,7 @@ commands:
                     SUCCESS=$(curl -H "token: 0c07a2df-c418-4c06-aeb8-f4863f8cda32" \
                     --request GET \
                     https://api.memstash.io/values/migrations-${CIRCLE_WORKFLOW_ID})
-                    if(($SUCCESS==1))
+                    if((${SUCCESS}==1))
                     then
                         npm i
                         npm run migration:revert
@@ -265,16 +265,17 @@ jobs:
                 command: |
                     if grep -q "has been executed successfully" migrations-${CIRCLE_WORKFLOW_ID}.txt
                     then
-                        res=1
+                        export Grepres=1
                         echo "Mirgration is successful"
                     else
-                        res=0
+                        export Grepres=0
                         echo "Mirgration failed"
                     fi
                     curl -H "Content-Type: text/plain" -H "token: 0c07a2df-c418-4c06-aeb8-f4863f8cda32" \
                         --request PUT \
-                        --data '${res}' \
+                        --data "${Grepres}" \
                         https://api.memstash.io/values/migrations-${CIRCLE_WORKFLOW_ID}
+                    echo "https://api.memstash.io/values/migrations-${CIRCLE_WORKFLOW_ID}"
                             
     deploy-frontend:
         docker:
