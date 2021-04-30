@@ -453,14 +453,17 @@ jobs:
                     then
                         aws s3api list-buckets --query "Buckets[].Name" >> bucketsfound.txt
                         cat bucketsfound.txt
-                        echo "Deleting Old Version"
-                        echo "Attempting to empty s3://udapeople-${OldWorkflowID} bucket"
-                        aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
-                        echo "s3://udapeople-${OldWorkflowID} bucket emptied"
-                        aws cloudformation delete-stack --stack-name "frontend-${OldWorkflowID}"
-                        echo "frontend-${OldWorkflowID} stack deleted"
-                        aws cloudformation delete-stack --stack-name "backend-${OldWorkflowID}"
-                        echo "backend-${OldWorkflowID} stack deleted"
+                        if(grep -q "$OldWorkflowID" bucketsfound.txt)
+                        then
+                            echo "Deleting Old Version"
+                            echo "Attempting to empty s3://udapeople-${OldWorkflowID} bucket"
+                            aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+                            echo "s3://udapeople-${OldWorkflowID} bucket emptied"
+                            aws cloudformation delete-stack --stack-name "frontend-${OldWorkflowID}"
+                            echo "frontend-${OldWorkflowID} stack deleted"
+                            aws cloudformation delete-stack --stack-name "backend-${OldWorkflowID}"
+                            echo "backend-${OldWorkflowID} stack deleted"
+                        fi
                     else
                         echo "Not Deleting Anything"
                     fi
