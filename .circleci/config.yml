@@ -76,7 +76,6 @@ jobs:
                 working_directory: ./backend
                 command: |
                     npm i
-                    npm update
                     npm run build
             - persist_to_workspace:
                 root: .
