@@ -4,15 +4,15 @@ https://github.com/MohamedElAzhary/cdond-c3-projectstarter
 
 [URL02]
 ## Public URL to S3 Bucket
-http://udapeople-a806275.s3-website-us-west-2.amazonaws.com
+http://udapeople-27285ed.s3-website-us-west-2.amazonaws.com
 
 [URL03]
 ## Public URL to CloudFront distribution
-doknf02226834.cloudfront.net
+d197nc7qfj3wtt.cloudfront.net
 
 [URL04]
 ## Public URL to back-end server in EC2
-ec2-34-209-111-92.us-west-2.compute.amazonaws.com
+ec2-35-166-231-115.us-west-2.compute.amazonaws.com
 
 [URL05]
 ## Public URL to Prometheus Server
