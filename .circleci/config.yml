@@ -451,6 +451,8 @@ jobs:
 
                     if [[ "$CurrentWorkflowID" != "$OldWorkflowID" ]]
                     then
+                        aws s3api list-buckets --query "Buckets[].Name" >> bucketsfound.txt
+                        cat bucketsfound.txt
                         echo "Deleting Old Version"
                         echo "Attempting to empty s3://udapeople-${OldWorkflowID} bucket"
                         aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
